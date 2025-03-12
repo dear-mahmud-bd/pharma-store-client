@@ -15,8 +15,17 @@ import { LogOut } from "lucide-react";
 import { FaBagShopping } from "react-icons/fa6";
 import Logo from "@/app/assets/logo.png";
 import Image from "next/image";
+import { useUser } from "@/context/UserContext";
+import { logout } from "@/services/AuthService";
 
 export default function Navbar() {
+  const { user, setIsLoading } = useUser();
+  // console.log(user);
+
+  const handleLogOut = () => {
+    logout();
+    setIsLoading(true);
+  };
   return (
     <header className="shadow bg-gray-100 w-full sticky top-0 z-10">
       <div className="container flex justify-between items-center mx-auto h-16 px-5">
@@ -59,29 +68,37 @@ export default function Navbar() {
               </span>
             </Button>
           </Link>
-          <Link href="/login">
-            <Button className="rounded-full text-white cursor-pointer">Log In</Button>
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="cursor-pointer">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>User</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-gray-50 mr-5">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Dashboard</DropdownMenuItem>
-              <DropdownMenuItem>My Shop</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="bg-red-500 cursor-pointer">
-                <LogOut />
-                <span>Log Out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {user?.email ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="cursor-pointer h-10 w-10">
+                <Avatar>
+                  <AvatarImage src="https://i.ibb.co.com/jD1GTj4/user.png" />
+                  <AvatarFallback>User</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-gray-50 mr-5">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                <DropdownMenuItem>My Shop</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogOut}
+                  className="bg-red-500 cursor-pointer"
+                >
+                  <LogOut />
+                  <span>Log Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login">
+              <Button className="rounded-full text-white cursor-pointer">
+                Log In
+              </Button>
+            </Link>
+          )}
         </nav>
       </div>
     </header>
