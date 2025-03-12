@@ -16,35 +16,36 @@ import { toast } from "sonner";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMedicineValidationScema } from "./addMedicineValidation";
-import { addAMedicine } from "@/services/Medicine";
+import { updateAMedicine } from "@/services/Medicine";
 import { useRouter } from "next/navigation";
+import { IMedicine } from "@/types";
 
-const AddMedicineForm = () => {
+const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(addMedicineValidationScema),
     defaultValues: {
-      name: "",
-      medi_image: "",
-      description: "",
-      price: 0,
-      stock: 0,
-      requiresPrescription: false,
+      name: medicine?.name || "",
+      medi_image: medicine.medi_image || "",
+      description: medicine.description || "",
+      price: medicine.price || 0,
+      stock: medicine.stock || 0,
+      requiresPrescription: medicine.requiresPrescription || false,
       manufacturer: {
-        name: "",
-        address: "",
-        contact: "",
+        name: medicine.manufacturer.name || "",
+        address: medicine.manufacturer.address || "",
+        contact: medicine.manufacturer.contact || "",
       },
-      expiryDate: "",
+      expiryDate: medicine.expiryDate || "",
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     data.expiryDate = new Date(data.expiryDate).toISOString();
     try {
-      // console.log("Submitted Data:", data);
-      const res = await addAMedicine(data);
-    //   console.log("Response- ", res);
+    //   console.log("Submitted Data:", data);
+      const res = await updateAMedicine(data, medicine?._id as string);
+      //   console.log("Response- ", res);
       if (res.success) {
         toast.success(res.message);
         router.push("/admin/medicine-shop");
@@ -58,7 +59,9 @@ const AddMedicineForm = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 border border-gray-300 rounded-xl">
-      <h1 className="text-2xl font-bold mb-4 text-center">Add Medicine</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">
+        Update Medicine Details or Stock
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Grid Layout for Responsiveness */}
@@ -237,4 +240,4 @@ const AddMedicineForm = () => {
   );
 };
 
-export default AddMedicineForm;
+export default UpdateMedicineForm;

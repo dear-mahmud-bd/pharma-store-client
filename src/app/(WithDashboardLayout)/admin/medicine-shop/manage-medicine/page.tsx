@@ -1,11 +1,11 @@
-import React from 'react';
+import MedicineShopPage from "../page";
 
 const ManageMedicinePage = () => {
-    return (
-        <div>
-            manage-medicine
-        </div>
-    );
+  return (
+    <div>
+      <MedicineShopPage></MedicineShopPage>
+    </div>
+  );
 };
 
 export default ManageMedicinePage;

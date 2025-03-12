@@ -5,10 +5,8 @@ import {
   List,
   ListCollapseIcon,
   ListOrderedIcon,
-  LucideListOrdered,
   SquareTerminal,
   UserPen,
-  UserPlus2Icon,
 } from "lucide-react";
 
 import {
