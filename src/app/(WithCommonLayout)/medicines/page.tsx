@@ -4,7 +4,7 @@ import { IMedicine } from "@/types";
 
 const MedicinesPage = async () => {
   const { data: medicines } = await getAllMedicines();
-  console.log(medicines);
+  // console.log(medicines);
 
   return (
     <div className="mx-auto">

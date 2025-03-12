@@ -5,7 +5,7 @@ import { IMedicine } from "@/types";
 import Link from "next/link";
 
 const MedicineCard = ({ medicine }: { medicine: IMedicine }) => {
-  console.log(medicine);
+  // console.log(medicine);
 
   return (
     <Card className="w-full text-center border-gray-300 shadow-md p-4 mx-auto">

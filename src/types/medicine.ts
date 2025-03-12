@@ -1,5 +1,5 @@
 export interface IMedicine {
-  _id: string;
+  _id?: string;
   name: string;
   manufacturer: {
     name: string;
@@ -12,7 +12,7 @@ export interface IMedicine {
   stock: number;
   requiresPrescription: boolean;
   expiryDate: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }

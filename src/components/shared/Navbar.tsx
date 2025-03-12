@@ -17,14 +17,22 @@ import Logo from "@/app/assets/logo.png";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/AuthService";
+import { protectedRoutes } from "@/constants";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { user, setIsLoading } = useUser();
   // console.log(user);
+  const pathname = usePathname();
+  const router = useRouter();
+  const path = user?.role === "admin" ? "admin" : "user";
 
   const handleLogOut = () => {
     logout();
     setIsLoading(true);
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
   return (
     <header className="shadow bg-gray-100 w-full sticky top-0 z-10">
@@ -76,12 +84,12 @@ export default function Navbar() {
                   <AvatarFallback>User</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-gray-50 mr-5">
+              <DropdownMenuContent className="bg-gray-50 mr-5 border-gray-300">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem>My Shop</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/${path}/dashboard`}>Dashboard</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogOut}
