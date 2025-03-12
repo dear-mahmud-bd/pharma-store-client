@@ -45,8 +45,8 @@ export default function Navbar() {
           <Link href={"/"}>
             <p>Home</p>
           </Link>
-          <Link href={"/store"}>
-            <p>Store</p>
+          <Link href={"/medicines"}>
+            <p>Medicines</p>
           </Link>
         </div>
         {/* <div className="max-w-md flex-grow">

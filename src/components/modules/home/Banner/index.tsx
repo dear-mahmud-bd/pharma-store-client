@@ -15,7 +15,7 @@ const Banner = () => {
             </h1>
             <p className="mt-6">
               <Link
-                href="/store"
+                href="/medicines"
                 className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
               >
                 Shop Now
