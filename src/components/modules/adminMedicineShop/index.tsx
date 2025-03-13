@@ -1,6 +1,6 @@
 "use client";
 
-import { NMTable } from "@/components/ui/core/MTable/index";
+import { MTable } from "@/components/ui/core/MTable/index";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye, Trash } from "lucide-react";
 import Image from "next/image";
@@ -126,7 +126,7 @@ const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
           </Button>
         </div>
       </div>
-      <NMTable columns={columns} data={medicines || []} />
+      <MTable columns={columns} data={medicines || []} />
       {/* <TablePagination totalPage={meta?.totalPage} /> */}
     </div>
   );

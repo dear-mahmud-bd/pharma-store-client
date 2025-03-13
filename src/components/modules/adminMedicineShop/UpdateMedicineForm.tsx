@@ -43,7 +43,7 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     data.expiryDate = new Date(data.expiryDate).toISOString();
     try {
-    //   console.log("Submitted Data:", data);
+      //   console.log("Submitted Data:", data);
       const res = await updateAMedicine(data, medicine?._id as string);
       //   console.log("Response- ", res);
       if (res.success) {

@@ -16,15 +16,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface NMTableProps<TData, TValue> {
+interface MTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function NMTable<TData, TValue>({
+export function MTable<TData, TValue>({
   columns,
   data,
-}: NMTableProps<TData, TValue>) {
+}: MTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,

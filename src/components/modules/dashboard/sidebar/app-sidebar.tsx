@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               },
               {
                 title: "My Order",
-                url: `/${path}/order`,
+                url: `/${path}/my-order`,
                 icon: ListOrderedIcon,
                 isActive: true,
               },
