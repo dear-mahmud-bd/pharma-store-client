@@ -11,6 +11,7 @@ export interface IMedicine {
   price: number;
   stock: number;
   requiresPrescription: boolean;
+  order_quantity?: number;
   expiryDate: string;
   createdAt?: string;
   updatedAt?: string;

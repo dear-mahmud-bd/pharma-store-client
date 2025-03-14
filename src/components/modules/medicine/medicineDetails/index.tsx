@@ -45,10 +45,18 @@ const MedicineDetails = ({ medicine }: { medicine: IMedicine }) => {
           </p>
           <hr />
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button variant="outline" className="w-full sm:w-1/2">
-              Add To Cart
-            </Button>
-            <Button className="w-full sm:w-1/2">Buy Now</Button>
+            {medicine?.stock > 0 ? (
+              <>
+                <Button variant="outline" className="w-full sm:w-1/2">
+                  Add To Cart
+                </Button>
+                <Button className="w-full sm:w-1/2">Buy Now</Button>
+              </>
+            ) : (
+              <>
+                <Button className="w-full">Out of Stock</Button>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>

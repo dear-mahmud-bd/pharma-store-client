@@ -1,7 +1,7 @@
 import { IMedicine } from "./medicine";
 
 export interface IOrderItem {
-  medicine: IMedicine;
+  medicine: IMedicine | string ;
   quantity: number;
 }
 
