@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { useUser } from "@/context/UserContext";
@@ -9,14 +9,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
+  clearCart,
   grandTotalSelector,
   orderedMedicinesSelector,
 } from "@/redux/features/cartSlice";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { IOrder } from "@/types";
+import { initializationOrderWithPayment } from "@/services/Orders";
 
 export default function PaymentDetails() {
+  const dispatch = useAppDispatch();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -37,14 +40,14 @@ export default function PaymentDetails() {
   const hasPrescriptionRequired = cartItems.some(
     (item) => item.requiresPrescription
   );
-  console.log(hasPrescriptionRequired);
+  // console.log(hasPrescriptionRequired);
 
   const shippingCost = cartItems.length > 0 ? 100 : 0;
   const discountAmount = 0;
   const grandTotal = subTotal + shippingCost - discountAmount;
 
+  const [fechedUser, setFechedUser] = useState(null);
   const currentUser = useUser();
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -60,6 +63,7 @@ export default function PaymentDetails() {
           country: data?.data?.address?.country || "",
           prescription_img_url: "",
         });
+        setFechedUser(data?.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -70,8 +74,12 @@ export default function PaymentDetails() {
     }
   }, [currentUser, reset]);
 
+  console.log("user now: ", fechedUser);
+
   const onSubmit = async (data: FieldValues) => {
-    const orderData:IOrder = {
+    const orderLoading = toast.loading("Order is being placed");
+
+    const orderData: IOrder = {
       user: {
         name: data.name,
         email: data.email,
@@ -93,9 +101,17 @@ export default function PaymentDetails() {
       orderData.prescription_img_url = data.prescription_img_url;
     }
 
-    console.log("CartItem : ", cartItems);
-    console.log("Order Data:", orderData);
-    toast.success("Order placed successfully!");
+    try {
+      const res = await initializationOrderWithPayment(orderData);
+      // console.log(res);
+      if (res.success) {
+        toast.success("Order request successfully!", { id: orderLoading });
+        dispatch(clearCart());
+        window.location.replace(res.url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -162,12 +178,20 @@ export default function PaymentDetails() {
           />
 
           {cartItems.length > 0 ? (
-            <Button
-              type="submit"
-              className="w-full font-semibold text-white cursor-pointer py-3"
-            >
-              Confirm Order
-            </Button>
+            fechedUser !== null ? (
+              <Button
+                type="submit"
+                className="w-full font-semibold text-white cursor-pointer py-3"
+              >
+                Confirm Order
+              </Button>
+            ) : (
+              <Link href={`/login`}>
+                <Button className="w-full text-white cursor-pointer">
+                  Please Log In First
+                </Button>
+              </Link>
+            )
           ) : (
             <Link href={`/medicines`}>
               <Button className="w-full text-white cursor-pointer">

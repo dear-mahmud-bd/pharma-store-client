@@ -48,6 +48,9 @@ const cartSlice = createSlice({
         (medicine) => medicine._id !== action.payload
       );
     },
+    clearCart: (state) => {
+      state.medicines = [];
+    },
   },
 });
 
@@ -66,5 +69,6 @@ export const {
   incrementOrderQuantity,
   decrementOrderQuantity,
   removeMedicine,
+  clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

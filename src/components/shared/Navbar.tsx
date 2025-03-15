@@ -19,8 +19,12 @@ import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/AuthService";
 import { protectedRoutes } from "@/constants";
 import { usePathname, useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/hooks";
+import { orderedMedicinesSelector } from "@/redux/features/cartSlice";
 
 export default function Navbar() {
+  const medicines = useAppSelector(orderedMedicinesSelector);
+
   const { user, setIsLoading } = useUser();
   // console.log(user);
   const pathname = usePathname();
@@ -72,7 +76,7 @@ export default function Navbar() {
             >
               <FaBagShopping className="w-5 h-5 text-gray-700" />
               <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                0
+                {medicines.length}
               </span>
             </Button>
           </Link>

@@ -101,7 +101,6 @@ const MyOrders = ({ orders }: { orders: IOrder[] }) => {
           <option
             value="canceled"
             disabled={
-              row.original.status === "pending" ||
               row.original.status === "shipped" ||
               row.original.status === "processing"
             }

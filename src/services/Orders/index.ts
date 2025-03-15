@@ -2,6 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { FieldValues } from "react-hook-form";
 
 export const getAllOrders = async () => {
   try {
@@ -57,4 +58,23 @@ export const getMyAllOrders = async () => {
   }
 };
 
-
+export const initializationOrderWithPayment = async (orders: FieldValues) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/payment/initiate`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${
+            (await cookies()).get("accessToken")!.value
+          }`,
+        },
+        body: JSON.stringify(orders),
+      }
+    );
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
