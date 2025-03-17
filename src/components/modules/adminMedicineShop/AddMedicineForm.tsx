@@ -13,13 +13,34 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMedicineValidationScema } from "./addMedicineValidation";
 import { addAMedicine } from "@/services/Medicine";
 import { useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+// Medicine categories enum
+export enum MedicineCategory {
+  PainRelief = "Pain Relief",
+  Antibiotics = "Antibiotics",
+  Supplements = "Supplements",
+  Gastrointestinal = "Gastrointestinal",
+  Cardiovascular = "Cardiovascular",
+  DiabetesManagement = "Diabetes Management",
+  Respiratory = "Respiratory",
+  Neurological = "Neurological",
+  Dermatology = "Dermatology",
+  AllergyImmunology = "Allergy & Immunology",
+}
 
 const AddMedicineForm = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(addMedicineValidationScema),
@@ -27,6 +48,7 @@ const AddMedicineForm = () => {
       name: "",
       medi_image: "",
       description: "",
+      category: "",
       price: 0,
       stock: 0,
       requiresPrescription: false,
@@ -40,11 +62,12 @@ const AddMedicineForm = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
     data.expiryDate = new Date(data.expiryDate).toISOString();
     try {
       // console.log("Submitted Data:", data);
       const res = await addAMedicine(data);
-    //   console.log("Response- ", res);
+      //   console.log("Response- ", res);
       if (res.success) {
         toast.success(res.message);
         router.push("/admin/medicine-shop");
@@ -54,6 +77,7 @@ const AddMedicineForm = () => {
     } catch (err: any) {
       console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -169,21 +193,6 @@ const AddMedicineForm = () => {
             />
           </div>
 
-          {/* Full-Width Description Field */}
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea {...field} className="h-24" />
-                </FormControl>
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
-
           {/* Manufacturer Details Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <FormField
@@ -228,8 +237,52 @@ const AddMedicineForm = () => {
               )}
             />
           </div>
+
+          {/* Full-Width Description Field */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} className="h-24" />
+                </FormControl>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-gray-50">
+                    {Object.values(MedicineCategory).map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+
           <Button type="submit" className="w-full text-white cursor-pointer">
-            Submit
+            {loading ? "Adding..." : "Add a medicine"}
           </Button>
         </form>
       </Form>

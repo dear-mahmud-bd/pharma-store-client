@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useAppDispatch } from "@/redux/hooks";
 import { addMedicine } from "@/redux/features/cartSlice";
 import { toast } from "sonner";
+import { currencyFormatter } from "@/lib/currencyFormatter";
 
 const MedicineCard = ({ medicine }: { medicine: IMedicine }) => {
   // console.log(medicine);
@@ -32,7 +33,9 @@ const MedicineCard = ({ medicine }: { medicine: IMedicine }) => {
             {medicine.name}
           </h3>
         </Link>
-        <p className="text-xl font-bold text-green-600">${medicine.price}</p>
+        <p className="text-xl font-bold text-green-600">
+          {currencyFormatter(medicine.price)}
+        </p>
         <div className="flex justify-center gap-4 mt-4">
           {medicine?.stock > 0 ? (
             <>

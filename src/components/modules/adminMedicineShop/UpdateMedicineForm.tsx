@@ -13,14 +13,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMedicineValidationScema } from "./addMedicineValidation";
 import { updateAMedicine } from "@/services/Medicine";
 import { useRouter } from "next/navigation";
 import { IMedicine } from "@/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { MedicineCategory } from "./AddMedicineForm";
 
 const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(addMedicineValidationScema),
@@ -28,7 +37,8 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
       name: medicine?.name || "",
       medi_image: medicine.medi_image || "",
       description: medicine.description || "",
-      price: medicine.price || 0,
+      category: medicine.category || "",
+      price: medicine.price || 1,
       stock: medicine.stock || 0,
       requiresPrescription: medicine.requiresPrescription || false,
       manufacturer: {
@@ -36,11 +46,12 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
         address: medicine.manufacturer.address || "",
         contact: medicine.manufacturer.contact || "",
       },
-      expiryDate: medicine.expiryDate || "",
+      expiryDate: medicine.expiryDate ? medicine.expiryDate.split("T")[0] : "",
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
     data.expiryDate = new Date(data.expiryDate).toISOString();
     try {
       //   console.log("Submitted Data:", data);
@@ -55,6 +66,7 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
     } catch (err: any) {
       console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -172,21 +184,6 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
             />
           </div>
 
-          {/* Full-Width Description Field */}
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea {...field} className="h-24" />
-                </FormControl>
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
-
           {/* Manufacturer Details Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <FormField
@@ -231,8 +228,52 @@ const UpdateMedicineForm = ({ medicine }: { medicine: IMedicine }) => {
               )}
             />
           </div>
+
+          {/* Full-Width Description Field */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} className="h-24" />
+                </FormControl>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-gray-50">
+                    {Object.values(MedicineCategory).map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+
           <Button type="submit" className="w-full text-white cursor-pointer">
-            Submit
+            {loading ? "Updating..." : "Update"}
           </Button>
         </form>
       </Form>

@@ -9,17 +9,25 @@ export const addMedicineValidationScema = z.object({
   medi_image: z
     .string({ required_error: "Medicine image URL is required" })
     .trim()
-    .url("Invalid image URL format"),
+    .url("Invalid image URL format")
+    .refine((url) => /\.(jpeg|jpg|png|gif|bmp|webp)$/i.test(url), {
+      message:
+        "Image must have a valid file extension (e.g., .jpg, .png, .webp). For testing, \n 'https://i.ibb.co.com/hFYKj5fG/medicine.jpg'",
+    }),
   description: z
     .string({ required_error: "Description is required" })
     .trim()
     .min(10, "Description must be at least 10 characters long."),
+  category: z
+    .string({ required_error: "Category is required" })
+    .trim()
+    .min(1, "Category is required"),
   price: z
     .number({ required_error: "Price is required" })
-    .min(0, "Price cannot be negative"),
+    .min(1, "Price must be at least 1"),
   stock: z
     .number({ required_error: "Stock is required" })
-    .min(0, "Stock cannot be negative"),
+    .min(1, "Stock must be at least 1"),
   requiresPrescription: z.boolean({
     required_error: "Prescription requirement must be specified",
   }),

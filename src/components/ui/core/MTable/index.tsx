@@ -71,7 +71,7 @@ export function MTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-24 text-2xl text-center">
                 No results.
               </TableCell>
             </TableRow>

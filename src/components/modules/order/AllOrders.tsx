@@ -101,6 +101,25 @@ const AllOrders = ({ orders }: { orders: IOrder[] }) => {
       ),
     },
     {
+      accessorKey: "payment",
+      header: "Payment",
+      cell: ({ row }) => (
+        <span
+          className={`p-2 rounded ${
+            row.original.status === "pending" ||
+            row.original.status === "canceled"
+              ? "bg-red-200 text-red-800"
+              : "bg-green-200 text-green-800"
+          }`}
+        >
+          {row.original.status === "pending" ||
+          row.original.status === "canceled"
+            ? "Fail"
+            : "Successful"}
+        </span>
+      ),
+    },
+    {
       accessorKey: "action",
       header: "Action",
       cell: ({ row }) => (
