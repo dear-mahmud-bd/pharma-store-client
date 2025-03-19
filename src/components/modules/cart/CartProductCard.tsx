@@ -11,11 +11,16 @@ import { useAppDispatch } from "@/redux/hooks";
 import { IMedicine } from "@/types";
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function CartProductCard({ product }: { product: IMedicine }) {
   const dispatch = useAppDispatch();
 
   const handleIncrementQuantity = () => {
+    if (Number(product?.stock) <= Number(product?.order_quantity)) {
+      toast.error("No Available Stock");
+      return;
+    }
     dispatch(incrementOrderQuantity(product._id));
   };
   const handleDecrementQuantity = () => {
@@ -40,7 +45,9 @@ export default function CartProductCard({ product }: { product: IMedicine }) {
       <div className="flex flex-col justify-between flex-grow">
         <div className="flex flex-col md:flex-row justify-between">
           <div>
-            <h1 className="text-lg md:text-xl font-semibold">{product?.name}</h1>
+            <h1 className="text-lg md:text-xl font-semibold">
+              {product?.name}
+            </h1>
             <div className="flex gap-2 md:gap-3 my-2 text-sm md:text-base">
               <p>
                 <span className="text-gray-500">Stock Availability:</span>{" "}
@@ -76,7 +83,9 @@ export default function CartProductCard({ product }: { product: IMedicine }) {
             >
               <Minus />
             </Button>
-            <p className="font-semibold text-lg p-2">{product?.order_quantity}</p>
+            <p className="font-semibold text-lg p-2">
+              {product?.order_quantity}
+            </p>
             <Button
               onClick={handleIncrementQuantity}
               variant="outline"

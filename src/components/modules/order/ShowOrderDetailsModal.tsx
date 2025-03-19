@@ -53,7 +53,9 @@ const ShowOrderDetailsModal: React.FC<ShowOrderDetailsModalProps> = ({
                 <div key={idx} className="text-gray-600">
                   <p className="flex justify-between">
                     <span>
-                      <Link href={`/medicines/${item.medicine._id}`}><strong>Name:</strong> {item.medicine.name}</Link>
+                      <Link href={`/medicines/${item.medicine._id}`}>
+                        <strong>Name:</strong> {item.medicine.name}
+                      </Link>
                     </span>
                     <span>
                       <strong>Quantity:</strong> {item.quantity}

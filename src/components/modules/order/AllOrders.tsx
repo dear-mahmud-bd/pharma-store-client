@@ -8,14 +8,24 @@ import { IOrder } from "@/types";
 import ShowOrderDetailsModal from "./ShowOrderDetailsModal";
 import { updateOrderStatus } from "@/services/Orders";
 import { toast } from "sonner";
+import ShowPrescription from "./ShowPrescription";
 
 const AllOrders = ({ orders }: { orders: IOrder[] }) => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [selectedPrescription, setSelectedPrescription] =
+    useState<IOrder | null>(null);
+  const [isPrescriptionModalOpen, setIsPrescriptionModalOpen] = useState(false);
+
   const handleView = (order: IOrder) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
+  };
+
+  const handlePrescriptionView = (order: IOrder) => {
+    setSelectedPrescription(order);
+    setIsPrescriptionModalOpen(true);
   };
 
   const handleStatusChange = async (orderId: string, newStatus: string) => {
@@ -121,12 +131,25 @@ const AllOrders = ({ orders }: { orders: IOrder[] }) => {
     },
     {
       accessorKey: "action",
-      header: "Action",
+      header: "Details",
       cell: ({ row }) => (
         <button
           className="text-gray-500 hover:text-blue-500 cursor-pointer"
           title="View"
           onClick={() => handleView(row.original)}
+        >
+          <Eye className="w-5 h-5" />
+        </button>
+      ),
+    },
+    {
+      accessorKey: "prescription",
+      header: "See prescription",
+      cell: ({ row }) => (
+        <button
+          className="text-gray-500 hover:text-blue-500 cursor-pointer"
+          title="View"
+          onClick={() => handlePrescriptionView(row.original)}
         >
           <Eye className="w-5 h-5" />
         </button>
@@ -144,6 +167,14 @@ const AllOrders = ({ orders }: { orders: IOrder[] }) => {
           order={selectedOrder}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
+      {selectedPrescription && (
+        <ShowPrescription
+          order={selectedPrescription}
+          isOpen={isPrescriptionModalOpen}
+          onClose={() => setIsPrescriptionModalOpen(false)}
         />
       )}
     </div>

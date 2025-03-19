@@ -20,7 +20,12 @@ import { initializationOrderWithPayment } from "@/services/Orders";
 
 export default function PaymentDetails() {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -74,11 +79,10 @@ export default function PaymentDetails() {
     }
   }, [currentUser, reset]);
 
-  console.log("user now: ", fechedUser);
+  // console.log("user now: ", fechedUser);
 
   const onSubmit = async (data: FieldValues) => {
     const orderLoading = toast.loading("Order is being placed");
-
     const orderData: IOrder = {
       user: {
         name: data.name,
@@ -141,41 +145,102 @@ export default function PaymentDetails() {
       <div className="p-5 border border-gray-300 rounded-xl bg-white">
         <h2 className="text-lg font-bold mb-4">Billing Details</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input {...register("name")} placeholder="Full Name" required />
           <Input
-            {...register("email")}
+            {...register("name", { required: "Name is required" })}
+            placeholder="Full Name"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
+          )}
+
+          <Input
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Enter a valid email",
+              },
+            })}
             type="email"
             placeholder="Email"
-            required
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+
           <Input
-            {...register("phone")}
+            {...register("phone", { required: "Phone number is required" })}
             type="tel"
             placeholder="Phone Number"
-            required
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm">{errors.phone.message}</p>
+          )}
+
           <Input
-            {...register("street")}
+            {...register("street", { required: "Street address is required" })}
             placeholder="Street Address"
-            required
           />
+          {errors.street && (
+            <p className="text-red-500 text-sm">{errors.street.message}</p>
+          )}
+
           <div className="grid grid-cols-3 gap-4">
-            <Input {...register("city")} placeholder="City" required />
-            <Input {...register("state")} placeholder="State" required />
-            <Input {...register("zip")} placeholder="ZIP Code" required />
+            <div>
+              <Input
+                {...register("city", { required: "City is required" })}
+                placeholder="City"
+              />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city.message}</p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("state", { required: "State is required" })}
+                placeholder="State"
+              />
+              {errors.state && (
+                <p className="text-red-500 text-sm">{errors.state.message}</p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("zip", { required: "ZIP Code is required" })}
+                placeholder="ZIP Code"
+              />
+              {errors.zip && (
+                <p className="text-red-500 text-sm">{errors.zip.message}</p>
+              )}
+            </div>
           </div>
-          <Input {...register("country")} placeholder="Country" required />
+
+          <Input
+            {...register("country", { required: "Country is required" })}
+            placeholder="Country"
+          />
+          {errors.country && (
+            <p className="text-red-500 text-sm">{errors.country.message}</p>
+          )}
+
           <Input
             {...register("prescription_img_url", {
-              required: hasPrescriptionRequired,
+              required: hasPrescriptionRequired
+                ? "Prescription image is required"
+                : false,
               pattern: {
                 value: /\.(jpeg|jpg|png|gif|bmp|webp)$/i,
                 message:
-                  "Please provide a valid image URL (jpeg, jpg, png, gif, bmp, webp)",
+                  "Please provide a valid image URL (jpeg, jpg, png, gif, bmp, webp) \n For testing 'https://i.ibb.co.com/rK7FSMm0/presentation.png'",
               },
             })}
             placeholder="Prescription Image URL (if required)"
           />
+          {errors.prescription_img_url && (
+            <p className="text-red-500 text-sm">
+              {errors.prescription_img_url.message}
+            </p>
+          )}
 
           {cartItems.length > 0 ? (
             fechedUser !== null ? (
