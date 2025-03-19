@@ -4,7 +4,9 @@ import { IMedicine } from "@/types";
 import Link from "next/link";
 
 const SomeMedicine = async () => {
-  const { data: medicines } = await getAllMedicines();
+  const {
+    data: { medicines },
+  } = await getAllMedicines("1", "6");
 
   return (
     <div className="mb-10">

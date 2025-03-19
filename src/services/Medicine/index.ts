@@ -4,9 +4,13 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
-export const getAllMedicines = async (query?: {
-  [key: string]: string | string[] | undefined;
-}) => {
+export const getAllMedicines = async (
+  page: string,
+  limit: string,
+  query?: {
+    [key: string]: string | string[] | undefined;
+  }
+) => {
   const params = new URLSearchParams();
   if (query?.search) {
     params.append("search", query?.search.toString());
@@ -26,6 +30,10 @@ export const getAllMedicines = async (query?: {
   if (query?.maxPrice) {
     params.append("maxPrice", query?.maxPrice.toString());
   }
+
+  params.append("page", page);
+  params.append("limit", limit);
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/medicine?${params}`,

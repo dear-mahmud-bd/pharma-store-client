@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut } from "lucide-react";
+import { LogOut, AlignJustify } from "lucide-react";
 import { FaBagShopping } from "react-icons/fa6";
 import Logo from "@/app/assets/logo.png";
 import Image from "next/image";
@@ -41,19 +41,39 @@ export default function Navbar() {
   return (
     <header className="shadow bg-gray-100 w-full sticky top-0 z-10">
       <div className="container flex justify-between items-center mx-auto h-16 px-5">
-        <Link href="/">
-          <h1 className="text-2xl font-black flex items-center">
-            <Image
-              src={Logo}
-              width={100}
-              height={100}
-              alt="Logo"
-              className="w-10"
-            />{" "}
-            PHARMA
-          </h1>
-        </Link>
-        <div className="max-w-md flex-grow flex gap-5 justify-center">
+        <div className="flex">
+          <div className=" md:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="cursor-pointer h-10 w-10">
+                <AlignJustify />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-gray-50 mr-5 border-gray-300">
+                <DropdownMenuItem>
+                  <Link href={`/`}>Home</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/medicines`}>Medicines</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/about-us`}>About Us</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <Link href="/">
+            <h1 className="text-2xl font-black flex items-center">
+              <Image
+                src={Logo}
+                width={100}
+                height={100}
+                alt="Logo"
+                className="w-10"
+              />{" "}
+              PHARMA
+            </h1>
+          </Link>
+        </div>
+        <div className="max-w-md hidden md:flex flex-grow  gap-5 justify-center">
           {[
             { name: "Home", path: "/" },
             { name: "Medicines", path: "/medicines" },

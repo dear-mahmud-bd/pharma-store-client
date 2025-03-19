@@ -38,7 +38,7 @@ const HorizontalFilter = () => {
   return (
     <div className="grid grid-cols-12 gap-4 p-4 border rounded-lg w-full border-gray-300 mb-5">
       <div className="col-span-12 md:col-span-6 lg:col-span-5">
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-2">
           {/* Price Filter */}
           <div className="flex items-center gap-2">
             <span className="text-gray-600">Price:</span>
@@ -67,7 +67,7 @@ const HorizontalFilter = () => {
 
           {/* Category Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger className="border-gray-300" asChild>
               <Button variant="outline" className="flex items-center gap-2">
                 {category || "Category"} <ChevronDown className="w-4 h-4" />
               </Button>
@@ -105,13 +105,13 @@ const HorizontalFilter = () => {
         <div className="flex justify-center gap-3">
           {/* Sort By Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger className="border-gray-300" asChild>
               <Button variant="outline" className="flex items-center gap-2">
                 {sortBy
                   ? sortBy === "asc"
                     ? "Low to High"
                     : "High to Low"
-                  : "Sort By Price"}
+                  : "Price Order"}
                 <ChevronDown className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -137,9 +137,9 @@ const HorizontalFilter = () => {
 
           {/* Prescription Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
-                {prescription || "Prescription"}{" "}
+            <DropdownMenuTrigger className="border-gray-300" asChild>
+              <Button variant="outline" className="text-sm flex items-center gap-2">
+                {prescription || "Prescription"}
                 <ChevronDown className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
