@@ -29,8 +29,8 @@ export interface IOrder {
   };
   items: IOrderItem[];
   prescription_img_url?: string;
-  sub_total: number;
-  status: OrderStatus;
+  sub_total?: number;
+  status?: OrderStatus;
   createdAt?: Date;
   updatedAt?: Date;
 }

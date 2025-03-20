@@ -30,7 +30,7 @@ const MedicinesList = ({
         "9",
         searchParams
       );
-      if (data.medicines.length === 0) {
+      if (data?.medicines?.length === 0) {
         setHasMore(false);
       } else {
         setMedicines((prev) => [...prev, ...data.medicines]);

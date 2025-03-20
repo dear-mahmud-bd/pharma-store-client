@@ -8,7 +8,7 @@ export interface IMedicine {
   };
   medi_image: string;
   description: string;
-  category: string,
+  category: string;
   price: number;
   stock: number;
   requiresPrescription: boolean;

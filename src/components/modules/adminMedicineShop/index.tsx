@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { IMedicine } from "@/types";
 import { deleteSingleMedicine } from "@/services/Medicine";
 import { toast } from "sonner";
+import { currencyFormatter } from "@/lib/currencyFormatter";
 
 const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
   const router = useRouter();
@@ -18,9 +19,11 @@ const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
   };
 
   const handleDelete = async (medicineId: string) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this medicine?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this medicine?"
+    );
     if (!isConfirmed) return;
-  
+
     try {
       const res = await deleteSingleMedicine(medicineId);
       if (res.success) {
@@ -32,7 +35,6 @@ const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
       console.error(err);
     }
   };
-  
 
   const columns: ColumnDef<IMedicine>[] = [
     {
@@ -63,7 +65,9 @@ const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
     {
       accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => <span>${row.original.price.toFixed(2)}</span>,
+      cell: ({ row }) => (
+        <span>{currencyFormatter(row.original.price as number)}</span>
+      ),
     },
     {
       accessorKey: "stock",
@@ -94,7 +98,9 @@ const AllMedicine = ({ medicines }: { medicines: IMedicine[] }) => {
             className="text-gray-500 hover:text-green-500 cursor-pointer"
             title="Edit"
             onClick={() =>
-              router.push(`/admin/medicine-shop/manage-medicine/${row.original._id}`)
+              router.push(
+                `/admin/medicine-shop/manage-medicine/${row.original._id}`
+              )
             }
           >
             <Edit className="w-5 h-5" />

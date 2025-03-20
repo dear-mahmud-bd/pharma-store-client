@@ -4,7 +4,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IOrder } from "@/types";
+import { currencyFormatter } from "@/lib/currencyFormatter";
+import { IOrder, IOrderItem } from "@/types";
 import Link from "next/link";
 
 interface ShowOrderDetailsModalProps {
@@ -49,13 +50,18 @@ const ShowOrderDetailsModal: React.FC<ShowOrderDetailsModalProps> = ({
               <strong>Medicine:</strong>
             </p>
             <div className="space-y-2">
-              {order.items.map((item, idx) => (
+              {order.items.map((item: IOrderItem, idx) => (
                 <div key={idx} className="text-gray-600">
                   <p className="flex justify-between">
                     <span>
-                      <Link href={`/medicines/${item.medicine._id}`}>
-                        <strong>Name:</strong> {item.medicine.name}
-                      </Link>
+                      {typeof item.medicine === "object" &&
+                      item.medicine !== null ? (
+                        <Link href={`/medicines/${item.medicine._id}`}>
+                          <strong>Name:</strong> {item.medicine.name}
+                        </Link>
+                      ) : (
+                        <span>Invalid Medicine Data</span>
+                      )}
                     </span>
                     <span>
                       <strong>Quantity:</strong> {item.quantity}
@@ -68,7 +74,8 @@ const ShowOrderDetailsModal: React.FC<ShowOrderDetailsModalProps> = ({
 
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
             <p className="text-gray-800 font-medium">
-              <strong>Total Price:</strong> ${order.sub_total.toFixed(2)}
+              <strong>Total Price:</strong>{" "}
+              {currencyFormatter(order.sub_total as number)}
             </p>
             <p className="text-gray-600">
               <strong>Order Placed Time:</strong>{" "}

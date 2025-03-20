@@ -9,6 +9,7 @@ import ShowOrderDetailsModal from "./ShowOrderDetailsModal";
 import { updateOrderStatus } from "@/services/Orders";
 import { toast } from "sonner";
 import ShowPrescription from "./ShowPrescription";
+import { currencyFormatter } from "@/lib/currencyFormatter";
 
 const AllOrders = ({ orders }: { orders: IOrder[] }) => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
@@ -60,7 +61,9 @@ const AllOrders = ({ orders }: { orders: IOrder[] }) => {
     {
       accessorKey: "sub_total",
       header: "Total Price",
-      cell: ({ row }) => <span>${row.original.sub_total.toFixed(2)}</span>,
+      cell: ({ row }) => (
+        <span>{currencyFormatter(row.original.sub_total as number)}</span>
+      ),
     },
     {
       accessorKey: "createdAt",

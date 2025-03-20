@@ -97,8 +97,8 @@ export default function PaymentDetails() {
         },
       },
       items: cartItems.map((item) => ({
-        medicine: item._id,
-        quantity: item.order_quantity,
+        medicine: item._id as string,
+        quantity: item.order_quantity as number,
       })),
     };
     if (hasPrescriptionRequired) {

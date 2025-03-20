@@ -8,6 +8,7 @@ import { IOrder } from "@/types";
 import ShowOrderDetailsModal from "./ShowOrderDetailsModal";
 import { updateOrderStatus } from "@/services/Orders";
 import { toast } from "sonner";
+import { currencyFormatter } from "@/lib/currencyFormatter";
 
 const MyOrders = ({ orders }: { orders: IOrder[] }) => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
@@ -50,7 +51,9 @@ const MyOrders = ({ orders }: { orders: IOrder[] }) => {
     {
       accessorKey: "sub_total",
       header: "Total Price",
-      cell: ({ row }) => <span>${row.original.sub_total.toFixed(2)}</span>,
+      cell: ({ row }) => (
+        <span>{currencyFormatter(row.original.sub_total as number)}</span>
+      ),
     },
     {
       accessorKey: "createdAt",
@@ -118,7 +121,7 @@ const MyOrders = ({ orders }: { orders: IOrder[] }) => {
           className={`p-2 rounded ${
             row.original.status === "pending" ||
             row.original.status === "canceled"
-              ? "bg-red-200 text-red-800" 
+              ? "bg-red-200 text-red-800"
               : "bg-green-200 text-green-800"
           }`}
         >

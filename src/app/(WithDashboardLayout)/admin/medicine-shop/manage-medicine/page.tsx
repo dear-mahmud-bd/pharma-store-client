@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import MedicineShopPage from "../page";
 
 const ManageMedicinePage = () => {

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import MyProfile from "@/components/modules/profile/MyProfile";
 import { getProfileData } from "@/services/AuthService";
 

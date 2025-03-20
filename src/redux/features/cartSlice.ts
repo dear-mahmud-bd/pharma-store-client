@@ -1,4 +1,4 @@
-import { IMedicine, IOrderItem } from "@/types";
+import { IMedicine } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 

@@ -69,7 +69,7 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
     } catch (error) {
       console.error("Failed to update password", error);
     }
-    setChanging(false)
+    setChanging(false);
   };
 
   return (
@@ -156,9 +156,12 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
                 })}
                 placeholder={profileData.address?.street}
               />
-              {errorsProfile.address?.street && (
+              {(errorsProfile.address as Record<string, any>)?.street && (
                 <p className="text-red-500 text-sm">
-                  {errorsProfile.address.street.message as string}
+                  {
+                    (errorsProfile.address as Record<string, any>)?.street
+                      ?.message
+                  }
                 </p>
               )}
             </div>
@@ -172,9 +175,12 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
                 })}
                 placeholder={profileData.address?.city}
               />
-              {errorsProfile.address?.city && (
+              {(errorsProfile.address as Record<string, any>)?.city && (
                 <p className="text-red-500 text-sm">
-                  {errorsProfile.address.city.message as string}
+                  {
+                    (errorsProfile.address as Record<string, any>)?.city
+                      ?.message
+                  }
                 </p>
               )}
             </div>
@@ -188,9 +194,12 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
                 })}
                 placeholder={profileData.address?.state}
               />
-              {errorsProfile.address?.state && (
+              {(errorsProfile.address as Record<string, any>)?.state && (
                 <p className="text-red-500 text-sm">
-                  {errorsProfile.address.state.message as string}
+                  {
+                    (errorsProfile.address as Record<string, any>)?.state
+                      ?.message
+                  }
                 </p>
               )}
             </div>
@@ -208,9 +217,9 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
                 })}
                 placeholder={profileData.address?.zip}
               />
-              {errorsProfile.address?.zip && (
+              {(errorsProfile.address as Record<string, any>)?.zip && (
                 <p className="text-red-500 text-sm">
-                  {errorsProfile.address.zip.message as string}
+                  {(errorsProfile.address as Record<string, any>)?.zip?.message}
                 </p>
               )}
             </div>
@@ -224,9 +233,12 @@ const UserProfile = ({ profileData }: { profileData: IProfile }) => {
                 })}
                 placeholder={profileData.address?.country}
               />
-              {errorsProfile.address?.country && (
+              {(errorsProfile.address as Record<string, any>)?.country && (
                 <p className="text-red-500 text-sm">
-                  {errorsProfile.address.country.message as string}
+                  {
+                    (errorsProfile.address as Record<string, any>)?.country
+                      ?.message
+                  }
                 </p>
               )}
             </div>
