@@ -1,4 +1,5 @@
 import MedecineDetails from "@/components/modules/medicine/medicineDetails";
+import MedicineInfoTips from "@/components/modules/medicine/medicineDetails/MedicineInfoTips";
 import { getSingleMedicine } from "@/services/Medicine";
 
 const MedicineDetailsPage = async ({
@@ -12,6 +13,7 @@ const MedicineDetailsPage = async ({
   return (
     <div>
       <MedecineDetails medicine={medicine}></MedecineDetails>
+      <MedicineInfoTips></MedicineInfoTips>
     </div>
   );
 };

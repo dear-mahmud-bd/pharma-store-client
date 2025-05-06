@@ -8,7 +8,7 @@ const HeroBanner = () => {
   const router = useRouter();
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (data:FieldValues) => {
+  const onSubmit = (data: FieldValues) => {
     if (data.search.trim()) {
       router.push(`/medicines?search=${data.search.trim()}`);
       reset(); // Clear search field after submission
@@ -18,12 +18,14 @@ const HeroBanner = () => {
   return (
     <div className="container mx-auto flex items-center justify-center h-full">
       <div className="max-w-2xl text-center">
-        <h2 className="text-lg text-green-800 font-semibold">
-          Trusted Pharmaceuticals, Quality Healthcare
-        </h2>
-        <h1 className="text-4xl md:text-5xl font-bold text-green-600 mt-2">
-          Welcome to Pharma
-        </h1>
+        <div className="bg-gray-200 py-4 rounded-xl">
+          <h2 className="text-lg text-green-800 font-semibold">
+            Trusted Pharmaceuticals, Quality Healthcare
+          </h2>
+          <h1 className="text-4xl md:text-5xl font-bold text-green-600 mt-2">
+            Welcome to Pharma
+          </h1>
+        </div>
         <p className="text-white mt-4">
           Discover a wide range of effective medicines and healthcare products.
           Your well-being is our priority.
@@ -36,7 +38,7 @@ const HeroBanner = () => {
             {...register("search")}
             type="text"
             placeholder="Find your medicines..."
-            className="px-4 py-2 border rounded-lg outline-none w-64"
+            className="w-64 px-4 py-2 border border-white rounded-lg bg-transparent text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white"
           />
           <button
             type="submit"

@@ -26,9 +26,9 @@ const MedicineDetails = ({ medicine }: { medicine: IMedicine }) => {
         <Image
           src={medicine?.medi_image}
           alt={medicine?.name}
-          width={500}
-          height={500}
-          className="rounded-md w-full object-cover max-h-80 sm:max-h-full"
+          width={800}
+          height={800}
+          className="rounded-md object-none w-full h-96 sm:max-h-full"
         />
       </div>
       <Card className="bg-white p-6 rounded-md border-gray-200 w-full">

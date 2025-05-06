@@ -25,11 +25,11 @@ const MedicineCard = ({ medicine }: { medicine: IMedicine }) => {
         height={800}
         src={medicine.medi_image}
         alt={medicine.name}
-        className="w-full h-full object-cover rounded-md"
+        className="w-full h-80 rounded-md"
       />
       <CardContent>
         <Link href={`/medicines/${medicine?._id}`}>
-          <h3 className="text-lg font-semibold text-gray-900 mt-3">
+          <h3 className="text-lg font-semibold text-gray-900 mt-3 hover:text-green-600">
             {medicine.name}
           </h3>
         </Link>

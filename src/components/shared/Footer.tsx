@@ -1,33 +1,34 @@
 import Image from "next/image";
 import logo from "../../app/assets/logo.png";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Link from "next/link";
 
 const sections = [
   {
     title: "Product",
     links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Marketplace", href: "#" },
-      { name: "Features", href: "#" },
+      { name: "Overview", href: "/about-us" },
+      { name: "Pricing", href: "/" },
+      { name: "Marketplace", href: "/medicines" },
+      { name: "Features", href: "/" },
     ],
   },
   {
     title: "Company",
     links: [
-      { name: "About", href: "#" },
-      { name: "Team", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
+      { name: "About", href: "/about-us" },
+      { name: "Team", href: "/" },
+      { name: "Blog", href: "/" },
+      { name: "Careers", href: "/" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
-      { name: "Advertise", href: "#" },
-      { name: "Privacy", href: "#" },
+      { name: "Help", href: "/" },
+      { name: "Sales", href: "/" },
+      { name: "Advertise", href: "/" },
+      { name: "Privacy", href: "/" },
     ],
   },
 ];
@@ -59,24 +60,24 @@ const Footer = () => {
               </div>
               <ul className="flex items-center space-x-6 text-muted-foreground">
                 <li className="font-medium hover:text-primary">
-                  <a href="#">
+                  <Link target="_blank" href="https://www.instagram.com/_ami_topu_">
                     <FaInstagram className="size-6" />
-                  </a>
+                  </Link>
                 </li>
                 <li className="font-medium hover:text-primary">
-                  <a href="#">
+                  <Link target="_blank" href="https://www.facebook.com/0mdmahmudulhasan0">
                     <FaFacebook className="size-6" />
-                  </a>
+                  </Link>
                 </li>
                 <li className="font-medium hover:text-primary">
-                  <a href="#">
+                  <Link href="/">
                     <FaTwitter className="size-6" />
-                  </a>
+                  </Link>
                 </li>
                 <li className="font-medium hover:text-primary">
-                  <a href="#">
+                  <Link target="_blank" href="https://www.linkedin.com/in/md-mahmudul-hasan-bd/">
                     <FaLinkedin className="size-6" />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -99,13 +100,13 @@ const Footer = () => {
             </div>
           </div>
           <div className="mt-20 flex flex-col justify-between gap-4 border-t pt-8 text-center text-sm font-medium text-muted-foreground lg:flex-row lg:items-center lg:text-left">
-            <p>© 2024 Shadcnblocks. All rights reserved.</p>
+            <p>© 2024 PHARMA. All rights reserved.</p>
             <ul className="flex justify-center gap-4 lg:justify-start">
               <li className="hover:text-primary">
-                <a href="#"> Terms and Conditions</a>
+                <Link href="/"> Terms and Conditions</Link>
               </li>
               <li className="hover:text-primary">
-                <a href="#"> Privacy Policy</a>
+                <Link href="/"> Privacy Policy</Link>
               </li>
             </ul>
           </div>

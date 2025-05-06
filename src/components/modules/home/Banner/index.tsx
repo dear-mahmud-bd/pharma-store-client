@@ -5,7 +5,7 @@ const Banner = () => {
   return (
     <div>
       {/* Hero Banner Section */}
-      <div className={`${styles.banner} relative bg-cover bg-center h-[500px]`}>
+      <div className={`${styles.banner} relative bg-cover px-2 md:px-0 bg-center h-[500px] md:h-[550px]`}>
         <HeroBanner/>
       </div>
 
